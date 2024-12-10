@@ -1,32 +1,32 @@
 """"
-El Gamal Encryption and Decryption algorithm
+El Gamal Encryption and Decryption Algorithm
 This application will be divided into 3 main sections: generating the key, encryption and decryption. 
-It outputs encrypted and decrypted messages using El Gamal algorithm.
-prime number: any number divided by 1 or itself ONLY
+It outputs encrypted and decrypted integer messages using El Gamal algorithm.
+Prime number: any number divided by 1 or itself ONLY
 """
-import random #a module used in generating a random number during the encryption process
-def is_prime(prime):
+import random #a module used in generating a random number (b and x here)
+def is_prime(prime): #function to check if a number is prime or not
         if prime <= 1: #negatives or 1 aren't prime numbers
             return False
         else: 
             for i in range(2, int(prime**0.5) + 1): #iterates from 2 to the square root+1 of the prime number, 1 and the prime number itself are not in range
-                if prime % i == 0: #if divisible by any:
+                if prime % i == 0: #if divisible by any number(i):
                     return False
-            return True #prime number
+            return True #Prime number
 
-def generating_keys (prime):
+def generating_keys (prime): #function to generate all the keys needed
     global x 
-    x= int(input ("Enter private key= ")) #takes the private key as an input
+    x= random.randint(2, prime - 2) #generates the private key randomly
     global g 
     g=2 #initialization: as g should be greater than 1 and smaller than p
     while g<prime: #as long as the g is smaller than prime, conditions under the loop will occur
-        check=[] #results
-        for i in range(1,prime): #i=power, range: 1<g<p-2
-            result= pow(g,i,prime) #g^i % p 
-            check.append (result) #adds the result of the calculation in the "check" list
-        if len(check) != len(set(check)): #checks if there's a repeated result
+        check_occurance=[] #results in each iteration
+        for i in range(1,prime): #i=power, range: 1<g<p
+            result= pow(g,i,prime) #g^i mod p 
+            check_occurance.append (result) #adds the result of the calculation in the list
+        if len(check_occurance) != len(set(check_occurance)): #checks if there's a repeated result, if yes:
             g+=1 #increments the g by 1 and loops again
-        else:
+        else: #if not
             print(f"G is equal to {g}")
             break #stops the loop
     global y 
@@ -53,14 +53,14 @@ def decryption(c1, c2, prime, x):
 message = None #intializing it with nothing just so i could use the variable in a condition
 prime=int(input("Enter prime number: "))
 #checking process:
-while not is_prime(prime):  # Looping until a valid prime is entered
+while is_prime(prime)==False:  # Looping until a valid prime is entered
     prime = int(input("The number entered is not prime. Please enter a prime number: "))
 while True: #an infinite loop,(will continue until 'broken')
     try:
         message = int(input("Please enter your integer message: "))
         if message>=prime: #if the message int value is greater than or equal to prime:
             print("Invalid input, message should be 0<=m<prime number")
-        else:
+        else: 
             print(f"You entered: {message}")
             break  # exit the loop when the input is valid
     except ValueError: #exception handeling: handeling wrong inputs
@@ -78,5 +78,4 @@ def main(message):
     print("Process is done.") #print a message indicating the process is done
 
 main(message) #provoking/calling the function
-
 
