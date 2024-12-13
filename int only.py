@@ -12,7 +12,7 @@ def is_prime(prime): #function to check if a number is prime or not
             for i in range(2, int(prime**0.5) + 1): #iterates from 2 to the square root+1 of the prime number, 1 and the prime number itself are not in range
                 if prime % i == 0: #if divisible by any number(i):
                     return False
-            return True # = Prime number
+            return True # = Prime number 
 
 def generating_keys (prime): #function to generate all the keys needed
     global x #changing variables to a global scope to use them outside the function
